@@ -4,8 +4,13 @@ const PORT = 4000;
 
 const app = express();
 
-app.get("/", (req, res) => {
-  return res.send("This is home page");
+const gossipMiddleware = (req, res, next) => {
+  console.log("This is gossip middleware");
+  next();
+};
+
+app.get("/", gossipMiddleware, (req, res) => {
+  return res.send("<h1>This is home page</h1>");
 });
 
 app.get("/login", (req, res) => {
