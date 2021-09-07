@@ -1,25 +1,12 @@
 import express from "express";
+import morgan from "morgan";
 
 const PORT = 4000;
 
 const app = express();
+const logger = morgan("dev");
 
-const loggingMiddleware = (req, res, next) => {
-  console.log(`Logging[${req.method}]: ${req.url}`);
-  next();
-};
-
-const privateMiddleware = (req, res, next) => {
-  const url = req.url;
-  if (url === "/protected") {
-    return res.send("<h1>Not allowed!</h1>");
-  }
-  console.log("Allowed, you may continue");
-  next();
-};
-
-app.use(loggingMiddleware);
-app.use(privateMiddleware);
+app.use(logger);
 app.get("/", (req, res) => {
   return res.send("<h1>This is home page</h1>");
 });
