@@ -11,6 +11,6 @@ const videoRouter = express.Router();
 videoRouter.get("/upload", uploadVideo);
 videoRouter.get("/:id", watch);
 videoRouter.get("/:id/edit", editVideo);
-videoRouter.get("/:id/edit", deleteVideo);
+videoRouter.get("/:id/delete", deleteVideo);
 
 export default videoRouter;
