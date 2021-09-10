@@ -1,9 +1,17 @@
-const fakeUser = {
+const user = {
   username: "Paolo",
-  loggedIn: false,
+  loggedIn: true,
 };
 
-export const trendings = (req, res) => res.json(fakeUser); // res.send("Today's trend on Home Page");
+export const trendings = (req, res) => {
+  const videos = [
+    { title: "Welcome" },
+    { title: "Funny Video" },
+    { title: "Kpop today" },
+    { title: "Today News" },
+  ];
+  return res.json({ user, videos }); // res.send("Today's trend on Home Page");
+};
 export const watch = (req, res) => {
   return res.send(`Watch Video #${req.params.id}`);
 };

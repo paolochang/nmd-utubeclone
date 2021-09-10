@@ -3,8 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import PageTitle from "../components/PageTitle";
 
+interface IVideo {
+  title: string;
+}
+
 const Home: React.FC = () => {
   const history = useHistory();
+  const [videos, setVideos] = useState([]);
   const [name, setName] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -12,9 +17,10 @@ const Home: React.FC = () => {
     const fetchDate = async () => {
       const res = await axios.get("http://localhost:5000");
       if (res.status) {
+        setVideos(res.data.videos);
         setIsLoggedIn(res.data.loggedIn);
-        if (res.data.loggedIn) {
-          setName(res.data.username);
+        if (res.data.user.loggedIn) {
+          setName(res.data.user.username);
         }
       }
     };
@@ -43,6 +49,9 @@ const Home: React.FC = () => {
           <button onClick={loginHandler}>Login</button>
         </>
       )}
+      {videos.map((video: IVideo, index) => (
+        <div key={index}>{video.title}</div>
+      ))}
     </div>
   );
 };
