@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import PageTitle from "../components/PageTitle";
-import Video from "../components/Video";
+import Preview from "../components/Preview";
 import { IVideo } from "../type";
 
 const Home: React.FC = () => {
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
         </>
       )}
       {videos.map((video: IVideo) => (
-        <Video {...video} />
+        <Preview key={video.id} {...video} />
       ))}
     </div>
   );
