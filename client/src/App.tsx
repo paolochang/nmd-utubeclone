@@ -26,7 +26,7 @@ const App: React.FC = () => {
             <Logout />
           </Layout>
         </Route>
-        <Route path="/watch">
+        <Route path="/videos/:id">
           <Layout>
             <Watch />
           </Layout>

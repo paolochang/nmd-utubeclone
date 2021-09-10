@@ -1,7 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router";
 import { IVideo } from "../type";
 
-const Video: React.FC<IVideo> = ({
+const Preview: React.FC<IVideo> = ({
   id,
   title,
   rating,
@@ -9,9 +10,13 @@ const Video: React.FC<IVideo> = ({
   createdAt,
   views,
 }) => {
+  const history = useHistory();
+  const titleClickHandler = () => {
+    history.push(`/videos/${id}`);
+  };
   return (
     <div>
-      <h4>{title}</h4>
+      <h4 onClick={titleClickHandler}>{title}</h4>
       <li>{rating}/5</li>
       <li>{comments} comments</li>
       <li>Posted {createdAt}</li>
@@ -20,4 +25,4 @@ const Video: React.FC<IVideo> = ({
   );
 };
 
-export default Video;
+export default Preview;
