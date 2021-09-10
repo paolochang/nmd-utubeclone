@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PageTitle from "../components/PageTitle";
 
 const Home: React.FC = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      <PageTitle title="Home" />
       <h1>Hi {name}, Welcome to Utube</h1>
       <footer>&copy; {new Date().getFullYear()} Utube</footer>
     </div>
