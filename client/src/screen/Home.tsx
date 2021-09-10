@@ -1,23 +1,48 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import PageTitle from "../components/PageTitle";
 
 const Home: React.FC = () => {
+  const history = useHistory();
   const [name, setName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      fetch("http://localhost:5000/api")
-        .then((res) => res.json())
-        .then((data) => setName(data.username));
+    const fetchDate = async () => {
+      const res = await axios.get("http://localhost:5000");
+      if (res.status) {
+        setIsLoggedIn(res.data.loggedIn);
+        if (res.data.loggedIn) {
+          setName(res.data.username);
+        }
+      }
     };
-    fetchData();
+    fetchDate();
   }, []);
+
+  const logoutHandler = () => {
+    history.push("/logout");
+  };
+
+  const loginHandler = () => {
+    history.push("/login");
+  };
 
   return (
     <div>
       <PageTitle title="Home" />
-      <h1>Hi {name}, Welcome to Utube</h1>
-      <footer>&copy; {new Date().getFullYear()} Utube</footer>
+      {isLoggedIn ? (
+        <>
+          <h1>Hi {name}, Welcome to Utube</h1>
+          <button onClick={logoutHandler}>Logout</button>
+        </>
+      ) : (
+        <>
+          <h1>Welcome to Utube, please login</h1>
+          <button onClick={loginHandler}>Login</button>
+        </>
+      )}
     </div>
   );
 };

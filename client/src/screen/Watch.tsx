@@ -6,7 +6,6 @@ const Watch: React.FC = () => {
     <div>
       <PageTitle title="Watch" />
       <h1>Watch Utube video</h1>
-      <footer>&copy; {new Date().getFullYear()} Utube</footer>
     </div>
   );
 };
