@@ -2,10 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import PageTitle from "../components/PageTitle";
-
-interface IVideo {
-  title: string;
-}
+import Video from "../components/Video";
+import { IVideo } from "../type";
 
 const Home: React.FC = () => {
   const history = useHistory();
@@ -49,8 +47,8 @@ const Home: React.FC = () => {
           <button onClick={loginHandler}>Login</button>
         </>
       )}
-      {videos.map((video: IVideo, index) => (
-        <div key={index}>{video.title}</div>
+      {videos.map((video: IVideo) => (
+        <Video {...video} />
       ))}
     </div>
   );

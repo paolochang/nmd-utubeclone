@@ -5,10 +5,38 @@ const user = {
 
 export const trendings = (req, res) => {
   const videos = [
-    { title: "Welcome" },
-    { title: "Funny Video" },
-    { title: "Kpop today" },
-    { title: "Today News" },
+    {
+      id: 1,
+      title: "Welcome",
+      rating: 4,
+      comments: 2,
+      createdAt: "1 day ago",
+      views: 59,
+    },
+    {
+      id: 2,
+      title: "Funny Video",
+      rating: 5,
+      comments: 17,
+      createdAt: "6 hours ago",
+      views: 109,
+    },
+    {
+      id: 3,
+      title: "Kpop today",
+      rating: 4,
+      comments: 23,
+      createdAt: "8 hours ago",
+      views: 267,
+    },
+    {
+      id: 4,
+      title: "Breaking News",
+      rating: 2,
+      comments: 4,
+      createdAt: "2 minutes ago",
+      views: 39,
+    },
   ];
   return res.json({ user, videos }); // res.send("Today's trend on Home Page");
 };
