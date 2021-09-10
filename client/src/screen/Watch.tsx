@@ -24,7 +24,7 @@ const Watch: React.FC = () => {
 
   return (
     <div>
-      <PageTitle title="Watch" />
+      <PageTitle title={`Watching "${video?.title}"`} />
       <h1>Watch Utube video: {video?.title}</h1>
       <li>Posted: {video?.createdAt}</li>
       <li>Comments: {video?.comments}</li>
