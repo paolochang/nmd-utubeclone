@@ -20,7 +20,7 @@ const Preview: React.FC<IVideo> = ({
       <li>{rating}/5</li>
       <li>{comments} comments</li>
       <li>Posted {createdAt}</li>
-      <li>{views} views</li>
+      <li>{views > 1 ? `${views} views` : `${views} view`} </li>
     </div>
   );
 };

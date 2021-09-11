@@ -3,6 +3,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
+import Edit from "./screen/Edit";
 import Home from "./screen/Home";
 import Login from "./screen/Login";
 import Logout from "./screen/Logout";
@@ -28,9 +29,14 @@ const App: React.FC = () => {
               <Logout />
             </Layout>
           </Route>
-          <Route path="/videos/:id">
+          <Route path="/videos/:id" exact>
             <Layout>
               <Watch />
+            </Layout>
+          </Route>
+          <Route path="/videos/:id/edit">
+            <Layout>
+              <Edit />
             </Layout>
           </Route>
         </Switch>
