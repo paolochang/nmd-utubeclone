@@ -43,9 +43,11 @@ export const trendings = (req, res) => {
 };
 export const watch = (req, res) => {
   const { id } = req.params;
-  return res.send(videos.filter((_, index, array) => array[index].id == id));
+  return res.json(videos.filter((_, index, array) => array[index].id == id));
 };
-export const editVideo = (req, res) => res.send("Edit Video");
+export const editVideo = (req, res) => {
+  return res.send("Edit Video");
+};
 export const deleteVideo = (req, res) => {
   return res.send(`Delete Video #${req.params.id}`);
 };
