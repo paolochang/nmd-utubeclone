@@ -45,8 +45,17 @@ export const watch = (req, res) => {
   const { id } = req.params;
   return res.json(videos.filter((_, index, array) => array[index].id == id));
 };
-export const editVideo = (req, res) => {
+export const getEdit = (req, res) => {
+  console.log(`EDIT VIDEO`, req);
   return res.send("Edit Video");
+};
+export const postEdit = (req, res) => {
+  const { id, title } = req.body;
+  let editing = videos.filter((_, index, array) => array[index].id == id);
+  const index = videos.findIndex((v) => v.id == id);
+  editing[0].title = title;
+  videos.splice(index, 1, ...editing);
+  return res.send({ status: true });
 };
 export const deleteVideo = (req, res) => {
   return res.send(`Delete Video #${req.params.id}`);
