@@ -18,10 +18,8 @@ const app = express();
 const logger = morgan("dev");
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(logger);
-
-// Test /api to print on Frontend
-app.use("/api", (req, res) => res.json({ username: "Paolo" }));
 
 app.use("/", globalRouter);
 app.use("/users", userRouter);

@@ -45,6 +45,7 @@ const Edit: React.FC = () => {
         <label>Title</label>
         <input
           {...register("title", { required: true })}
+          type="text"
           placeholder="New title"
         />
         <button type="submit">Update</button>

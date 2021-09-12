@@ -45,6 +45,7 @@ export const watch = (req, res) => {
   const { id } = req.params;
   return res.json(videos.filter((_, index, array) => array[index].id == id));
 };
+// This getEdit is not being used
 export const getEdit = (req, res) => {
   console.log(`EDIT VIDEO`, req);
   return res.send("Edit Video");
@@ -60,5 +61,20 @@ export const postEdit = (req, res) => {
 export const deleteVideo = (req, res) => {
   return res.send(`Delete Video #${req.params.id}`);
 };
-export const uploadVideo = (req, res) => res.send("Upload Video");
+export const getUpload = (req, res) => res.send("GET Upload Video");
+export const postUpload = (req, res) => {
+  // here we will add a video to the videos array
+  console.log(`POST from controller:`, req.body);
+  const { title } = req.body;
+  let newVideo = {
+    id: videos.length + 1,
+    title,
+    rating: 0,
+    comments: 0,
+    createdAt: "now",
+    views: 0,
+  };
+  videos.push(newVideo);
+  return res.json({ status: true });
+};
 export const search = (req, res) => res.send("Search Video");

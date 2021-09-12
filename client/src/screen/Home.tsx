@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import PageTitle from "../components/PageTitle";
 import Preview from "../components/Preview";
 import { IVideo } from "../type";
@@ -16,7 +17,7 @@ const Home: React.FC = () => {
       const res = await axios.get("http://localhost:5000");
       if (res.status) {
         setVideos(res.data.videos);
-        setIsLoggedIn(res.data.loggedIn);
+        setIsLoggedIn(res.data.user.loggedIn);
         if (res.data.user.loggedIn) {
           setName(res.data.user.username);
         }
@@ -40,6 +41,9 @@ const Home: React.FC = () => {
         <>
           <h1>Hi {name}, Welcome to Utube</h1>
           <button onClick={logoutHandler}>Logout</button>
+          <Link to="/upload">
+            <button>Upload</button>
+          </Link>
         </>
       ) : (
         <>
