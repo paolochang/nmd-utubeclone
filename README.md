@@ -2,6 +2,10 @@
 
 Implemented reverse engineered YouTube application. NodeJS, Express and ReactJS are used.
 
+### Pre-requirement
+
+MongoDB, Mongoose
+
 ### Setup
 
 Install `node_modules` in server side

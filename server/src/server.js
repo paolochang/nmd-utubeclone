@@ -1,5 +1,4 @@
-// const express = require("express");
-// const cors = require("cors");
+import "./db";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
