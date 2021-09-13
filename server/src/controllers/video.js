@@ -49,9 +49,12 @@ export const home = async (req, res) => {
   }
 };
 
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
   const { id } = req.params;
-  return res.json(videos.filter((_, index, array) => array[index].id == id));
+  console.log("SERVER - WATCH", id);
+  const videos = await Video.find({ _id: id });
+  return res.end();
+  // return res.json(videos.filter((_, index, array) => array[index].id == id));
 };
 // This getEdit is not being used
 export const getEdit = (req, res) => {
@@ -70,19 +73,20 @@ export const deleteVideo = (req, res) => {
   return res.send(`Delete Video #${req.params.id}`);
 };
 export const getUpload = (req, res) => res.send("GET Upload Video");
-export const postUpload = (req, res) => {
-  // here we will add a video to the videos array
-  console.log(`POST from controller:`, req.body);
-  const { title } = req.body;
-  let newVideo = {
-    id: videos.length + 1,
-    title,
-    rating: 0,
-    comments: 0,
-    createdAt: "now",
-    views: 0,
-  };
-  videos.push(newVideo);
-  return res.json({ status: true });
+export const postUpload = async (req, res) => {
+  try {
+    const { title, description, hashtags } = req.body;
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags.split(",").map((tag) => {
+        let word = tag.trim().replaceAll(" ", "_");
+        return word.charAt(0) != "#" ? `#${word}` : word;
+      }),
+    });
+    return res.json({ success: true });
+  } catch (error) {
+    return res.json({ success: false, errorMessage: error._message });
+  }
 };
-export const search = (req, res) => res.send("Search Video");
+// export const search = (req, res) => res.send("Search Video");

@@ -17,14 +17,14 @@ const Watch: React.FC = () => {
     const fetchVideo = async () => {
       const res = await axios.get(`/videos/${id}`);
       if (res.status) {
-        setVideo(res.data[0]);
+        setVideo(res.data);
       }
     };
     fetchVideo();
   }, [id]);
 
   const EditHandler = () => {
-    history.push(`/videos/${video?.id}/edit`, { video });
+    history.push(`/videos/${video?._id}/edit`, { video });
   };
 
   return (
@@ -33,9 +33,9 @@ const Watch: React.FC = () => {
       <h1>Watch Utube video: {video?.title}</h1>
       <li>Posted: {video?.createdAt}</li>
       <li>
-        {video?.views && video?.views > 1
-          ? `${video.views} views`
-          : `${video?.views} view`}
+        {video?.meta.views && video?.meta.views > 1
+          ? `${video.meta.views} views`
+          : `${video?.meta.views} view`}
       </li>
       <li>Comments: {video?.comments}</li>
       <button onClick={EditHandler}>Edit Video</button>

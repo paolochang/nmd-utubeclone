@@ -23,7 +23,7 @@ const Edit: React.FC = () => {
     console.log(location.state.video.title);
   }, [location]);
 
-  const postVideoInfo = async (id: number, title: string) => {
+  const postVideoInfo = async (id: string, title: string) => {
     const res = await axios.post(`/videos/${id}/edit`, {
       id,
       title,
@@ -35,7 +35,7 @@ const Edit: React.FC = () => {
 
   const updateHandler: SubmitHandler<IEditForm> = (data) => {
     console.log(data);
-    postVideoInfo(location.state.video.id, data.title);
+    postVideoInfo(location.state.video._id, data.title);
   };
 
   return (
