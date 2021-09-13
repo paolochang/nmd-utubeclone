@@ -51,9 +51,11 @@ const Home: React.FC = () => {
           <button onClick={loginHandler}>Login</button>
         </>
       )}
-      {videos.map((video: IVideo) => (
-        <Preview key={video.id} {...video} />
-      ))}
+      {videos.length > 0 ? (
+        videos.map((video: IVideo) => <Preview key={video.id} {...video} />)
+      ) : (
+        <li>Sorry nothing found.</li>
+      )}
     </div>
   );
 };

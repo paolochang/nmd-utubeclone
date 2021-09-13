@@ -1,3 +1,5 @@
+import Video from "../models/Video";
+
 const user = {
   username: "Paolo",
   loggedIn: true,
@@ -38,9 +40,15 @@ let videos = [
   },
 ];
 
-export const trendings = (req, res) => {
-  return res.json({ user, videos }); // res.send("Today's trend on Home Page");
+export const home = async (req, res) => {
+  try {
+    const videos = await Video.find({});
+    return res.json({ user, videos });
+  } catch (error) {
+    return res.json({ error });
+  }
 };
+
 export const watch = (req, res) => {
   const { id } = req.params;
   return res.json(videos.filter((_, index, array) => array[index].id == id));
