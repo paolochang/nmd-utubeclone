@@ -35,7 +35,7 @@ const Upload: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <label>Title</label>
         <input
-          {...register("title", { required: true })}
+          {...register("title", { required: true, maxLength: 80 })}
           type="text"
           placeholder="Title"
         />

@@ -44,7 +44,7 @@ const Edit: React.FC = () => {
       <form onSubmit={handleSubmit(updateHandler)}>
         <label>Title</label>
         <input
-          {...register("title", { required: true })}
+          {...register("title", { required: true, maxLength: 80 })}
           type="text"
           placeholder="New title"
         />
