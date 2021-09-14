@@ -50,11 +50,13 @@ export const home = async (req, res) => {
 };
 
 export const watch = async (req, res) => {
-  const { id } = req.params;
-  console.log("SERVER - WATCH", id);
-  const videos = await Video.find({ _id: id });
-  return res.end();
-  // return res.json(videos.filter((_, index, array) => array[index].id == id));
+  try {
+    const { id } = req.params;
+    const video = await Video.findById(id);
+    return res.json({ success: true, video });
+  } catch (error) {
+    return res.json({ success: false, errorMessage: error });
+  }
 };
 // This getEdit is not being used
 export const getEdit = (req, res) => {
