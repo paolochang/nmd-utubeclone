@@ -5,6 +5,7 @@ import { IVideo } from "../type";
 const Preview: React.FC<IVideo> = ({
   _id,
   title,
+  description,
   comments,
   createdAt,
   meta,
@@ -16,6 +17,7 @@ const Preview: React.FC<IVideo> = ({
   return (
     <div>
       <h4 onClick={titleClickHandler}>{title}</h4>
+      <li>{description}</li>
       <li>{meta.rating}/5</li>
       <li>{comments} comments</li>
       <li>Posted {createdAt}</li>

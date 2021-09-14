@@ -17,7 +17,7 @@ const Watch: React.FC = () => {
     const fetchVideo = async () => {
       const res = await axios.get(`/videos/${id}`);
       if (res.status) {
-        setVideo(res.data);
+        setVideo(res.data.video);
       }
     };
     fetchVideo();
@@ -31,6 +31,7 @@ const Watch: React.FC = () => {
     <div>
       <PageTitle title={`Watching "${video?.title}"`} />
       <h1>Watch Utube video: {video?.title}</h1>
+      <li>Description: {video?.description}</li>
       <li>Posted: {video?.createdAt}</li>
       <li>
         {video?.meta.views && video?.meta.views > 1
