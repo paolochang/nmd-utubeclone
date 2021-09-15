@@ -7,6 +7,7 @@ import Edit from "./screen/Edit";
 import Home from "./screen/Home";
 import Login from "./screen/Login";
 import Logout from "./screen/Logout";
+import NotFound from "./screen/NotFound";
 import Upload from "./screen/Upload";
 import Watch from "./screen/Watch";
 
@@ -43,6 +44,11 @@ const App: React.FC = () => {
           <Route path="/videos/:id/edit">
             <Layout>
               <Edit />
+            </Layout>
+          </Route>
+          <Route>
+            <Layout>
+              <NotFound />
             </Layout>
           </Route>
         </Switch>
