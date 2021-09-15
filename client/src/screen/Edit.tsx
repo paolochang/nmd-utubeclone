@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory, useLocation } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IVideo } from "../type";
@@ -10,23 +10,27 @@ interface ILocation {
 
 interface IEditForm {
   title: string;
+  description: string;
+  hashtags: string;
 }
 
 const Edit: React.FC = () => {
   const location = useLocation<ILocation>();
   const history = useHistory();
   const { register, handleSubmit } = useForm({
-    defaultValues: { title: location.state.video.title },
+    defaultValues: {
+      title: location.state.video.title,
+      description: location.state.video.description,
+      hashtags: location.state.video.hashtags,
+    },
   });
 
-  useEffect(() => {
-    console.log(location.state.video.title);
-  }, [location]);
-
-  const postVideoInfo = async (id: string, title: string) => {
+  const postVideoInfo = async (id: string, video: IEditForm) => {
     const res = await axios.post(`/videos/${id}/edit`, {
       id,
-      title,
+      title: video.title,
+      description: video.description,
+      hashtags: video.hashtags.toString(),
     });
     if (res.status) {
       history.push(`/videos/${id}`);
@@ -34,8 +38,7 @@ const Edit: React.FC = () => {
   };
 
   const updateHandler: SubmitHandler<IEditForm> = (data) => {
-    console.log(data);
-    postVideoInfo(location.state.video._id, data.title);
+    postVideoInfo(location.state.video._id, data);
   };
 
   return (
@@ -47,6 +50,18 @@ const Edit: React.FC = () => {
           {...register("title", { required: true, maxLength: 80 })}
           type="text"
           placeholder="New title"
+        />
+        <label>Description</label>
+        <input
+          {...register("description", { required: true })}
+          type="text"
+          placeholder="Description"
+        />
+        <label>Hashtags</label>
+        <input
+          {...register("hashtags", { required: true })}
+          type="text"
+          placeholder="Hashtags separated by comma"
         />
         <button type="submit">Update</button>
       </form>

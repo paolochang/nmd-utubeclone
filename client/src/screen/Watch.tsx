@@ -29,17 +29,24 @@ const Watch: React.FC = () => {
 
   return (
     <div>
-      <PageTitle title={`Watching "${video?.title}"`} />
-      <h1>Watch Utube video: {video?.title}</h1>
-      <li>Description: {video?.description}</li>
-      <li>Posted: {video?.createdAt}</li>
-      <li>
-        {video?.meta.views && video?.meta.views > 1
-          ? `${video.meta.views} views`
-          : `${video?.meta.views} view`}
-      </li>
-      <li>Comments: {video?.comments}</li>
-      <button onClick={EditHandler}>Edit Video</button>
+      {video !== null ? (
+        <>
+          <PageTitle title={`Watching "${video?.title}"`} />
+          <h1>Watch Utube video: {video?.title}</h1>
+          <li>Description: {video?.description}</li>
+          <li>Hashtags: {video?.hashtags}</li>
+          <li>Posted: {video?.createdAt}</li>
+          <li>
+            {video?.meta.views && video?.meta.views > 1
+              ? `${video.meta.views} views`
+              : `${video?.meta.views} view`}
+          </li>
+          <li>Comments: {video?.comments}</li>
+          <button onClick={EditHandler}>Edit Video</button>{" "}
+        </>
+      ) : (
+        <h1>Video is not found.</h1>
+      )}
     </div>
   );
 };

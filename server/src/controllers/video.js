@@ -1,4 +1,5 @@
 import Video from "../models/Video";
+import { hashtagsHandler } from "../utils";
 
 const user = {
   username: "Paolo",
@@ -59,17 +60,32 @@ export const watch = async (req, res) => {
   }
 };
 // This getEdit is not being used
-export const getEdit = (req, res) => {
-  console.log(`EDIT VIDEO`, req);
-  return res.send("Edit Video");
+export const getEdit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const video = await Video.findById(id);
+    return res.json({ success: true, video });
+  } catch (error) {
+    return res.json({ success: false, errorMessage: error });
+  }
 };
-export const postEdit = (req, res) => {
-  const { id, title } = req.body;
-  let editing = videos.filter((_, index, array) => array[index].id == id);
-  const index = videos.findIndex((v) => v.id == id);
-  editing[0].title = title;
-  videos.splice(index, 1, ...editing);
-  return res.send({ status: true });
+
+export const postEdit = async (req, res) => {
+  try {
+    const { id, title, description, hashtags } = req.body;
+    const video = await Video.exists({ _id: id });
+    if (!video) {
+      throw new Error("Video does not exist");
+    }
+    await Video.findByIdAndUpdate(id, {
+      title,
+      description,
+      hashtags: hashtagsHandler(hashtags),
+    });
+    return res.send({ status: true });
+  } catch (error) {
+    return res.send({ status: false, error });
+  }
 };
 export const deleteVideo = (req, res) => {
   return res.send(`Delete Video #${req.params.id}`);
@@ -81,10 +97,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
-      hashtags: hashtags.split(",").map((tag) => {
-        let word = tag.trim().replaceAll(" ", "_");
-        return word.charAt(0) != "#" ? `#${word}` : word;
-      }),
+      hashtags: hashtagsHandler(hashtags),
     });
     return res.json({ success: true });
   } catch (error) {
