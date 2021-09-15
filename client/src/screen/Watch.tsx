@@ -34,14 +34,19 @@ const Watch: React.FC = () => {
           <PageTitle title={`Watching "${video?.title}"`} />
           <h1>Watch Utube video: {video?.title}</h1>
           <li>Description: {video?.description}</li>
-          <li>Hashtags: {video?.hashtags}</li>
           <li>Posted: {video?.createdAt}</li>
           <li>
             {video?.meta.views && video?.meta.views > 1
               ? `${video.meta.views} views`
               : `${video?.meta.views} view`}
           </li>
-          <li>Comments: {video?.comments}</li>
+          <li>Comments[{video?.comments ? video.comments : 0}]</li>
+          <label>Hashtags</label>
+          <ul>
+            {video?.hashtags.map((hashtag, index) => (
+              <li key={index}>{hashtag}</li>
+            ))}
+          </ul>
           <button onClick={EditHandler}>Edit Video</button>{" "}
         </>
       ) : (
