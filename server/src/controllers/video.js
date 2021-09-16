@@ -7,7 +7,7 @@ const user = {
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({});
+    const videos = await Video.find({}).sort({ createdAt: "desc" });
     return res.json({ user, videos });
   } catch (error) {
     return res.json({ error });
@@ -79,4 +79,18 @@ export const postUpload = async (req, res) => {
   }
 };
 
-// export const search = (req, res) => res.send("Search Video");
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  let videos = [];
+  if (keyword) {
+    try {
+      videos = await Video.find({
+        title: { $regex: new RegExp(keyword, "i") },
+      }).sort({ createdAt: "desc" });
+      return res.json({ success: true, videos });
+    } catch (error) {
+      console.log(error);
+      return res.json({ success: false, error });
+    }
+  }
+};

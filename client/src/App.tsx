@@ -8,6 +8,7 @@ import Home from "./screen/Home";
 import Login from "./screen/Login";
 import Logout from "./screen/Logout";
 import NotFound from "./screen/NotFound";
+import Search from "./screen/Search";
 import Upload from "./screen/Upload";
 import Watch from "./screen/Watch";
 
@@ -29,6 +30,11 @@ const App: React.FC = () => {
           <Route path="/logout">
             <Layout>
               <Logout />
+            </Layout>
+          </Route>
+          <Route path="/search">
+            <Layout>
+              <Search />
             </Layout>
           </Route>
           <Route path="/upload">
