@@ -23,8 +23,24 @@ const Watch: React.FC = () => {
     fetchVideo();
   }, [id]);
 
+  const deleteVideo = async (id: string) => {
+    try {
+      const res = await axios.get(`/videos/${id}/delete`);
+      if (res.data.success) {
+        history.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const EditHandler = () => {
     history.push(`/videos/${video?._id}/edit`, { video });
+  };
+
+  const DeleteHandler = () => {
+    // history.push(`/videos/${video?._id}/delete`);
+    deleteVideo(video!._id);
   };
 
   return (
@@ -47,7 +63,8 @@ const Watch: React.FC = () => {
               <li key={index}>{hashtag}</li>
             ))}
           </ul>
-          <button onClick={EditHandler}>Edit Video</button>{" "}
+          <button onClick={EditHandler}>Edit Video</button>
+          <button onClick={DeleteHandler}>Delete Video</button>
         </>
       ) : (
         <h1>Video is not found.</h1>
