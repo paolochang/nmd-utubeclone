@@ -1,8 +1,12 @@
 export interface IVideo {
-  id: number;
+  _id: string;
   title: string;
-  rating: number;
-  comments: number;
+  description: string;
   createdAt: string;
-  views: number;
+  hashtags: string[];
+  comments: number;
+  meta: {
+    views: number;
+    rating: number;
+  };
 }
