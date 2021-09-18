@@ -1,14 +1,9 @@
 import Video from "../models/Video";
 
-const user = {
-  username: "Paolo",
-  loggedIn: true,
-};
-
 export const home = async (req, res) => {
   try {
     const videos = await Video.find({}).sort({ createdAt: "desc" });
-    return res.json({ user, videos });
+    return res.json({ videos });
   } catch (error) {
     return res.json({ error });
   }
