@@ -27,11 +27,7 @@ const Home: React.FC = () => {
   }, []);
 
   const logoutHandler = () => {
-    history.push("/logout");
-  };
-
-  const loginHandler = () => {
-    history.push("/login");
+    history.push("/signout");
   };
 
   return (
@@ -40,7 +36,7 @@ const Home: React.FC = () => {
       {isLoggedIn ? (
         <>
           <h1>Hi {name}, Welcome to Utube</h1>
-          <button onClick={logoutHandler}>Logout</button>
+          <button onClick={logoutHandler}>Sign out</button>
           <Link to="/upload">
             <button>Upload</button>
           </Link>
@@ -48,7 +44,6 @@ const Home: React.FC = () => {
       ) : (
         <>
           <h1>Welcome to Utube, please login</h1>
-          <button onClick={loginHandler}>Login</button>
         </>
       )}
       {videos.length > 0 ? (

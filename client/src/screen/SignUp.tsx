@@ -31,28 +31,28 @@ const SignUp: React.FC = () => {
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit(signupHandler)}>
         <input
-          type="email"
           {...register("email", { required: true })}
+          type="email"
           placeholder="Email"
         />
         <input
-          type="text"
           {...register("username", { required: true })}
+          type="text"
           placeholder="Username"
         />
         <input
-          type="password"
           {...register("password", { required: true })}
+          type="password"
           placeholder="Password"
         />
         <input
-          type="text"
           {...register("name", { required: true })}
+          type="text"
           placeholder="Name"
         />
         <input
-          type="text"
           {...register("location", { required: true })}
+          type="text"
           placeholder="Location"
         />
         <button>Sign up</button>
