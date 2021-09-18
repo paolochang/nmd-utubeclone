@@ -1,4 +1,5 @@
 import User from "../models/User";
+import bcrypt from "bcrypt";
 
 // export const getSignup = (req, res) => res.send("GET SignUp this app");
 export const postSignup = async (req, res) => {
