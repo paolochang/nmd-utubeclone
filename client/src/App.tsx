@@ -5,8 +5,9 @@ import "./App.css";
 import Layout from "./components/Layout";
 import Edit from "./screen/Edit";
 import Home from "./screen/Home";
-import Login from "./screen/Login";
-import Logout from "./screen/Logout";
+import SignUp from "./screen/SignUp";
+import SignIn from "./screen/SignIn";
+import SignOut from "./screen/SignOut";
 import NotFound from "./screen/NotFound";
 import Search from "./screen/Search";
 import Upload from "./screen/Upload";
@@ -22,14 +23,19 @@ const App: React.FC = () => {
               <Home />
             </Layout>
           </Route>
-          <Route path="/login">
+          <Route path="/signup">
             <Layout>
-              <Login />
+              <SignUp />
             </Layout>
           </Route>
-          <Route path="/logout">
+          <Route path="/signin">
             <Layout>
-              <Logout />
+              <SignIn />
+            </Layout>
+          </Route>
+          <Route path="/signout">
+            <Layout>
+              <SignOut />
             </Layout>
           </Route>
           <Route path="/search">

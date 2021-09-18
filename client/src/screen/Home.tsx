@@ -9,18 +9,18 @@ import { IVideo } from "../type";
 const Home: React.FC = () => {
   const history = useHistory();
   const [videos, setVideos] = useState([]);
-  const [name, setName] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const name = useState("")[0];
+  const isLoggedIn = useState(false)[0];
 
   useEffect(() => {
     const fetchDate = async () => {
       const res = await axios.get("http://localhost:5000");
       if (res.status) {
         setVideos(res.data.videos);
-        setIsLoggedIn(res.data.user.loggedIn);
-        if (res.data.user.loggedIn) {
-          setName(res.data.user.username);
-        }
+        // setIsLoggedIn(res.data.user.loggedIn);
+        // if (res.data.user.loggedIn) {
+        //   setName(res.data.user.username);
+        // }
       }
     };
     fetchDate();

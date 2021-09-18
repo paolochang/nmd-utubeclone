@@ -1,13 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import NavigationBar from "./NavigationBar";
 
 const Layout: React.FC = ({ children }) => {
   return (
     <div>
       <div>
-        <Link to="/">Home</Link>
-        <SearchBar />
+        <NavigationBar />
       </div>
       {children}
       <footer>&copy; {new Date().getFullYear()} Utube</footer>
