@@ -31,7 +31,11 @@ const SearchBar: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(keywordHandler)}>
-      <input {...register("keyword", { required: true })} />
+      <input
+        {...register("keyword", { required: true })}
+        type="text"
+        placeholder="Search"
+      />
     </form>
   );
 };

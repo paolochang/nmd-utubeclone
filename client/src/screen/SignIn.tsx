@@ -1,5 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, Form, Input } from "../components/shared/Inputs";
 
 interface ISignInForm {
   username: string;
@@ -16,19 +17,19 @@ const SignIn: React.FC = () => {
   return (
     <div>
       <h1>Sign In</h1>
-      <form onSubmit={handleSubmit(signinHandler)}>
-        <input
+      <Form onSubmit={handleSubmit(signinHandler)}>
+        <Input
           {...register("username", { required: true })}
           type="text"
           placeholder="Username"
         />
-        <input
+        <Input
           {...register("password", { required: true })}
           type="password"
           placeholder="Password"
         />
-        <button>Sign In</button>
-      </form>
+        <Button>Sign In</Button>
+      </Form>
     </div>
   );
 };

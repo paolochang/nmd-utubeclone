@@ -1,7 +1,8 @@
-import axios from "axios";
 import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import axios from "axios";
 import { useHistory } from "react-router";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, Form, Input } from "../components/shared/Inputs";
 
 interface ISignUpForm {
   email: string;
@@ -21,6 +22,7 @@ const SignUp: React.FC = () => {
       if (res.data.success) {
         history.push("/signin");
       }
+      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -29,34 +31,34 @@ const SignUp: React.FC = () => {
   return (
     <div>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit(signupHandler)}>
-        <input
+      <Form onSubmit={handleSubmit(signupHandler)}>
+        <Input
           {...register("email", { required: true })}
           type="email"
           placeholder="Email"
         />
-        <input
+        <Input
           {...register("username", { required: true })}
           type="text"
           placeholder="Username"
         />
-        <input
+        <Input
           {...register("password", { required: true })}
           type="password"
           placeholder="Password"
         />
-        <input
+        <Input
           {...register("name", { required: true })}
           type="text"
           placeholder="Name"
         />
-        <input
+        <Input
           {...register("location", { required: true })}
           type="text"
           placeholder="Location"
         />
-        <button>Sign up</button>
-      </form>
+        <Button>Sign up</Button>
+      </Form>
     </div>
   );
 };
