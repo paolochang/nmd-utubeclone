@@ -3,10 +3,16 @@ import bcrypt from "bcrypt";
 
 // export const getSignup = (req, res) => res.send("GET SignUp this app");
 export const postSignup = async (req, res) => {
+  let isPasswordMatch = true;
   let existUsername = false;
   let existEmail = false;
   try {
-    const { name, username, email, password, location } = req.body.data;
+    const { name, username, email, password, password2, location } =
+      req.body.data;
+    if (password !== password2) {
+      isPasswordMatch = false;
+      throw new Error("Password confirmation does not match.");
+    }
     existUsername = await User.exists({ username });
     existEmail = await User.exists({ email });
     if (existUsername || existEmail) {
@@ -26,6 +32,7 @@ export const postSignup = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       errorMessage: error.message,
+      isPasswordMatch,
       existUsername,
       existEmail,
     });

@@ -8,6 +8,7 @@ interface ISignUpForm {
   email: string;
   username: string;
   password: string;
+  password2: string;
   name: string;
   location: string;
 }
@@ -15,9 +16,14 @@ interface ISignUpForm {
 const SignUp: React.FC = () => {
   const history = useHistory();
   const { register, handleSubmit } = useForm<ISignUpForm>();
-  const [exist, setExist] = useState({
-    username: false,
-    email: false,
+  // const [exist, setExist] = useState({
+  //   username: false,
+  //   email: false,
+  // });
+  const [validation, setValidation] = useState({
+    isPasswordMatch: true,
+    existUsername: false,
+    existEmail: false,
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,16 +31,27 @@ const SignUp: React.FC = () => {
     try {
       const res = await axios.post("/signup", { data });
       if (res.data) {
-        setExist({
-          username: false,
-          email: false,
+        // setExist({
+        //   username: false,
+        //   email: false,
+        // });
+        setValidation({
+          isPasswordMatch: true,
+          existUsername: false,
+          existEmail: false,
         });
         setErrorMessage("");
         history.push("/signin");
       }
     } catch (err: any) {
-      const { existUsername, existEmail, errorMessage } = err.response.data;
-      setExist({ username: existUsername, email: existEmail });
+      const { isPasswordMatch, existUsername, existEmail, errorMessage } =
+        err.response.data;
+      // setExist({ username: existUsername, email: existEmail });
+      setValidation({
+        isPasswordMatch,
+        existUsername,
+        existEmail,
+      });
       setErrorMessage(errorMessage);
       console.warn(err);
     }
@@ -48,18 +65,26 @@ const SignUp: React.FC = () => {
           {...register("email", { required: true })}
           type="email"
           placeholder="Email"
-          hasError={Boolean(exist.email)}
+          // hasError={Boolean(exist.email)}
+          hasError={Boolean(validation.existEmail)}
         />
         <Input
           {...register("username", { required: true })}
           type="text"
           placeholder="Username"
-          hasError={Boolean(exist.username)}
+          // hasError={Boolean(exist.username)}
+          hasError={Boolean(validation.existUsername)}
         />
         <Input
           {...register("password", { required: true })}
           type="password"
           placeholder="Password"
+        />
+        <Input
+          {...register("password2", { required: true })}
+          type="password"
+          placeholder="Re-enter password"
+          hasError={Boolean(!validation.isPasswordMatch)}
         />
         <Input
           {...register("name", { required: true })}
