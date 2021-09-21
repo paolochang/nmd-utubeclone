@@ -3,8 +3,18 @@ import bcrypt from "bcrypt";
 
 // export const getSignup = (req, res) => res.send("GET SignUp this app");
 export const postSignup = async (req, res) => {
+  let existUsername = false;
+  let existEmail = false;
   try {
     const { name, username, email, password, location } = req.body.data;
+    existUsername = await User.exists({ username });
+    existEmail = await User.exists({ email });
+    if (existUsername || existEmail) {
+      if (existUsername && existEmail)
+        throw new Error("This username and email is already taken");
+      else if (existUsername) throw new Error("This username is already taken");
+      else if (existEmail) throw new Error("This email is already taken");
+    }
     const user = await User.create({
       name,
       username,
@@ -14,7 +24,12 @@ export const postSignup = async (req, res) => {
     });
     return res.json({ success: true, user });
   } catch (error) {
-    return res.json({ success: false, errorMessage: error.message });
+    return res.json({
+      success: false,
+      errorMessage: error.message,
+      existUsername,
+      existEmail,
+    });
   }
 };
 export const signin = (req, res) => res.send("Login User");

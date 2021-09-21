@@ -8,7 +8,8 @@ interface ISignInForm {
 }
 
 const SignIn: React.FC = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm<ISignInForm>();
+  const { errors } = formState;
 
   const signinHandler: SubmitHandler<ISignInForm> = (data) => {
     console.log(data);
@@ -22,11 +23,13 @@ const SignIn: React.FC = () => {
           {...register("username", { required: true })}
           type="text"
           placeholder="Username"
+          hasError={Boolean(errors.username)}
         />
         <Input
           {...register("password", { required: true })}
           type="password"
           placeholder="Password"
+          hasError={Boolean(errors.password)}
         />
         <Button>Sign In</Button>
       </Form>
