@@ -13,9 +13,12 @@ export const watch = async (req, res) => {
   try {
     const { id } = req.params;
     const video = await Video.findById(id);
-    return res.json({ success: true, video });
+    if (!video) {
+      throw new Error("Video cannot be found.");
+    }
+    return res.json({ video });
   } catch (error) {
-    return res.json({ success: false, errorMessage: error });
+    return res.status(404).json({ errorMessage: error });
   }
 };
 
@@ -24,9 +27,12 @@ export const getEdit = async (req, res) => {
   try {
     const { id } = req.params;
     const video = await Video.findById(id);
-    return res.json({ success: true, video });
+    if (!video) {
+      throw new Error("Video cannot be found.");
+    }
+    return res.json({ video });
   } catch (error) {
-    return res.json({ success: false, errorMessage: error });
+    return res.status(404).json({ errorMessage: error });
   }
 };
 
@@ -44,7 +50,7 @@ export const postEdit = async (req, res) => {
     });
     return res.send({ status: true });
   } catch (error) {
-    return res.send({ status: false, error });
+    return res.status(404).send({ error });
   }
 };
 
@@ -68,9 +74,9 @@ export const postUpload = async (req, res) => {
       description,
       hashtags: Video.formatHashtags(hashtags),
     });
-    return res.json({ success: true });
+    return res.json({});
   } catch (error) {
-    return res.json({ success: false, errorMessage: error._message });
+    return res.status(400).json({ errorMessage: error._message });
   }
 };
 
@@ -82,10 +88,9 @@ export const search = async (req, res) => {
       videos = await Video.find({
         title: { $regex: new RegExp(keyword, "i") },
       }).sort({ createdAt: "desc" });
-      return res.json({ success: true, videos });
+      return res.json({ videos });
     } catch (error) {
-      console.log(error);
-      return res.json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
   }
 };
