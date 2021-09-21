@@ -24,22 +24,19 @@ const SignUp: React.FC = () => {
   const signupHandler: SubmitHandler<ISignUpForm> = async (data) => {
     try {
       const res = await axios.post("/signup", { data });
-      if (res.data.success) {
+      if (res.data) {
         setExist({
           username: false,
           email: false,
         });
         setErrorMessage("");
         history.push("/signin");
-      } else {
-        setExist({
-          username: res.data.existUsername,
-          email: res.data.existEmail,
-        });
-        setErrorMessage(res.data.errorMessage);
       }
-    } catch (error) {
-      console.warn("WARN:", error);
+    } catch (err: any) {
+      const { existUsername, existEmail, errorMessage } = err.response.data;
+      setExist({ username: existUsername, email: existEmail });
+      setErrorMessage(errorMessage);
+      console.warn(err);
     }
   };
 

@@ -11,7 +11,7 @@ export const postSignup = async (req, res) => {
     existEmail = await User.exists({ email });
     if (existUsername || existEmail) {
       if (existUsername && existEmail)
-        throw new Error("This username and email is already taken");
+        throw new Error("This username and email are already taken");
       else if (existUsername) throw new Error("This username is already taken");
       else if (existEmail) throw new Error("This email is already taken");
     }
@@ -22,10 +22,9 @@ export const postSignup = async (req, res) => {
       password,
       location,
     });
-    return res.json({ success: true, user });
+    return res.json({ user });
   } catch (error) {
-    return res.json({
-      success: false,
+    return res.status(400).json({
       errorMessage: error.message,
       existUsername,
       existEmail,
