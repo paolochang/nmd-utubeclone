@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button, ErrorMessage, Form, Input } from "../components/shared/Inputs";
+import { Link } from "react-router-dom";
 
 interface ISignUpForm {
   email: string;
@@ -31,10 +32,6 @@ const SignUp: React.FC = () => {
     try {
       const res = await axios.post("/signup", { data });
       if (res.data) {
-        // setExist({
-        //   username: false,
-        //   email: false,
-        // });
         setValidation({
           isPasswordMatch: true,
           existUsername: false,
@@ -46,7 +43,6 @@ const SignUp: React.FC = () => {
     } catch (err: any) {
       const { isPasswordMatch, existUsername, existEmail, errorMessage } =
         err.response.data;
-      // setExist({ username: existUsername, email: existEmail });
       setValidation({
         isPasswordMatch,
         existUsername,
@@ -65,14 +61,12 @@ const SignUp: React.FC = () => {
           {...register("email", { required: true })}
           type="email"
           placeholder="Email"
-          // hasError={Boolean(exist.email)}
           hasError={Boolean(validation.existEmail)}
         />
         <Input
           {...register("username", { required: true })}
           type="text"
           placeholder="Username"
-          // hasError={Boolean(exist.username)}
           hasError={Boolean(validation.existUsername)}
         />
         <Input
@@ -99,6 +93,13 @@ const SignUp: React.FC = () => {
         <ErrorMessage message={errorMessage} />
         <Button>Sign up</Button>
       </Form>
+      <hr />
+      <div>
+        <p>Already have an account?</p>
+        <Link to="/signin">
+          <Button>Log in now &rarr;</Button>
+        </Link>
+      </div>
     </div>
   );
 };
