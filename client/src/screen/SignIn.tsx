@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { Button, Form, Input } from "../components/shared/Inputs";
+import { Button, ErrorMessage, Form, Input } from "../components/shared/Inputs";
 
 interface ISignInForm {
   username: string;
@@ -9,11 +11,26 @@ interface ISignInForm {
 }
 
 const SignIn: React.FC = () => {
-  const { register, handleSubmit, formState } = useForm<ISignInForm>();
-  const { errors } = formState;
+  const history = useHistory();
+  const { register, handleSubmit } = useForm<ISignInForm>();
+  const [validation, setValidation] = useState({
+    existUsername: false,
+    isPasswordMatch: true,
+  });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const signinHandler: SubmitHandler<ISignInForm> = async (data) => {
-    console.log(data);
+    try {
+      const res = await axios.post("/signin", { data });
+      if (res.status) {
+        history.push("/");
+      }
+    } catch (err: any) {
+      const { isPasswordMatch, existUsername, errorMessage } =
+        err.response.data;
+      setValidation({ isPasswordMatch, existUsername });
+      setErrorMessage(errorMessage);
+    }
   };
 
   return (
@@ -24,14 +41,15 @@ const SignIn: React.FC = () => {
           {...register("username", { required: true })}
           type="text"
           placeholder="Username"
-          hasError={Boolean(errors.username)}
+          hasError={Boolean(!validation.existUsername)}
         />
         <Input
           {...register("password", { required: true })}
           type="password"
           placeholder="Password"
-          hasError={Boolean(errors.password)}
+          hasError={Boolean(validation.isPasswordMatch)}
         />
+        <ErrorMessage message={errorMessage} />
         <Button>Sign In</Button>
       </Form>
       <hr />

@@ -38,7 +38,30 @@ export const postSignup = async (req, res) => {
     });
   }
 };
-export const signin = (req, res) => res.send("Login User");
+
+export const postSignin = async (req, res) => {
+  let existUsername = false;
+  let isPasswordMatch = false;
+  try {
+    const { username, password } = req.body.data;
+    // check if account exists
+    const user = await User.findOne({ username });
+    if (!user) {
+      throw new Error("An account with this username does not exists.");
+    }
+    // check if password correct
+    const ok = await bcrypt.compare(password, user.password);
+    if (!ok) {
+      throw new Error("Password does not match.");
+    }
+    return res.send("Login User");
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ errorMessage: error.message, existUsername, isPasswordMatch });
+  }
+};
+
 export const signout = (req, res) => res.send("Logout User");
 export const seeUser = (req, res) => res.send("See User");
 export const editUser = (req, res) => res.send("Edit User");

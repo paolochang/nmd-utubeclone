@@ -17,10 +17,6 @@ interface ISignUpForm {
 const SignUp: React.FC = () => {
   const history = useHistory();
   const { register, handleSubmit } = useForm<ISignUpForm>();
-  // const [exist, setExist] = useState({
-  //   username: false,
-  //   email: false,
-  // });
   const [validation, setValidation] = useState({
     isPasswordMatch: true,
     existUsername: false,
